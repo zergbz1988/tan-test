@@ -1,0 +1,12 @@
+App\Models\Entities\Dealer:
+  db: documents
+  collection: dealer
+  fields:
+    id:
+      type: id
+      id: true
+    name:
+      type: string
+      length: 128
+    address:
+      type: string

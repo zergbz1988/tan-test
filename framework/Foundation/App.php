@@ -2,7 +2,12 @@
 
 namespace TanTest\Foundation;
 
-use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Common\DataFixtures\Executor\MongoDBExecutor;
+use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
+use Doctrine\MongoDB\Connection;
+use Doctrine\ODM\MongoDB\Configuration;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Mapping\Driver\YamlDriver;
 use Throwable;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
@@ -94,6 +99,18 @@ class App implements ContainerInterface
     }
 
     /**
+     * @return DocumentManager
+     */
+    public function getDocumentManager(): DocumentManager
+    {
+        if (!$this->container->has('documentManager')) {
+            throw new \LogicException('The Document Manager is not set in your application.');
+        }
+
+        return $this->container->get('documentManager');
+    }
+
+    /**
      * @param array $container
      * @throws \Doctrine\ORM\ORMException
      */
@@ -158,7 +175,43 @@ class App implements ContainerInterface
      */
     protected function handleMongoDbStore(array &$container, $store): void
     {
+        if (!key_exists('documentsMapper', $store) || !is_array($store['documentsMapper'])) {
+            throw new InvalidConfigurationException('documentsMapper must be set in store config');
+        }
+        if (!key_exists('mongodbParams', $store)) {
+            throw new InvalidConfigurationException('mongodbParams must be set in store config');
+        }
+        if (!key_exists('proxyDir', $store)) {
+            throw new InvalidConfigurationException('proxyDir must be set in store config');
+        }
+        if (!key_exists('hydratorDir', $store)) {
+            throw new InvalidConfigurationException('hydratorDir must be set in store config');
+        }
+        $documentsMapper = $store['documentsMapper'];
+        $mongodbParams = $store['mongodbParams'];
+        $connection = new Connection($mongodbParams);
+        $config = new Configuration();
+        $config->setProxyDir($store['proxyDir']);
+        $config->setProxyNamespace('Proxies');
+        $config->setHydratorDir($store['hydratorDir']);
+        $config->setHydratorNamespace('Hydrators');
+        $yamlDriver = new YamlDriver($documentsMapper);
+        $config->setMetadataDriverImpl($yamlDriver);
+        $documentManager = DocumentManager::create($connection, $config);
 
+        if (key_exists('useFixtures', $store) && $store['useFixtures']) {
+            $fixturesLoader = new Loader();
+            if (!key_exists('fixtures', $store) || !is_array($store['fixtures'])) {
+                throw new InvalidConfigurationException('Fixtures must be set in store config if useFixtures option is set to true');
+            }
+            foreach ($store['fixtures'] as $fixture) {
+                $fixturesLoader->addFixture(new $fixture);
+            }
+            $purger = new MongoDBPurger();
+            $executor = new MongoDBExecutor($documentManager, $purger);
+            $executor->execute($fixturesLoader->getFixtures());
+        }
+        $container['documentManager'] = $documentManager;
     }
 
     /**

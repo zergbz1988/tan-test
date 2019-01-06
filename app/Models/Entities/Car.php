@@ -51,6 +51,14 @@ class Car
     }
 
     /**
+     * @return object
+     */
+    public function dealer()
+    {
+        return $this->dealer;
+    }
+
+    /**
      * @return string
      */
     public function make(): string
@@ -83,9 +91,9 @@ class Car
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function vin(): int
+    public function vin(): string
     {
         return $this->vin;
     }

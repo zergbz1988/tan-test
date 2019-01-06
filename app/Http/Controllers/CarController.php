@@ -18,10 +18,6 @@ class CarController extends Controller
 {
     public function info(): Response
     {
-        $make = $this->request()->query->get('make') ?? '';
-        $model = $this->request()->query->get('model') ?? '';
-        $componentry = $this->request()->query->get('componentry') ?? '';
-
         $validator = new CarInfoValidator($this->request()->query);
         if (!$validator->validate()) {
             return $this->response([
@@ -30,9 +26,19 @@ class CarController extends Controller
             ], 400);
         }
 
-        $entityManager = $this->app()->getEntityManager();
-        $data = $entityManager->getRepository(Car::class)
-            ->findFirstByClientAndCarParams($make . '%', $model . '%', '%' . $componentry . '%');
+        $make = $this->request()->query->get('make');
+        $model = $this->request()->query->get('model');
+        $componentry = $this->request()->query->get('componentry');
+
+        try {
+            $entityManager = $this->app()->getEntityManager();
+            $data = $entityManager->getRepository(Car::class)
+                ->findFirstByClientAndCarParams($make . '%', $model . '%', '%' . $componentry . '%');
+        } catch (\LogicException $e) {
+            $documentManager = $this->app()->getDocumentManager();
+            $data = $documentManager->getRepository(Car::class)
+                ->findFirstByClientAndCarParams('/' . $make . '.*/', '/' . $model . '.*/', '/.*' . $componentry . '.*/');
+        }
 
         return $this->response([
             'status' => 'ok',

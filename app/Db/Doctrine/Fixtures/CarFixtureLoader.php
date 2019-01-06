@@ -17,17 +17,24 @@ class CarFixtureLoader extends AbstractFixture
      */
     public function load(ObjectManager $manager)
     {
+        $dealer1 = $this->getReference('dealer1');
+        $manager->initializeObject($dealer1);
+        $dealer2 = $this->getReference('dealer2');
+        $manager->initializeObject($dealer2);
+        $dealer3 = $this->getReference('dealer3');
+        $manager->initializeObject($dealer3);
+
         $car1 = new Car('Mercedes-Benz', 'C-klasse', 'Электропакет', 2500000, '4USBT53544LT26841');
-        $car1->addToDealer($this->getReference('dealer 1'));
         $car2 = new Car('Mercedes-Benz', 'C-klasse', 'Электропакет', 2500000, 'WMWRC31060TB95535');
-        $car2->addToDealer($this->getReference('dealer 1'));
         $car3 = new Car('Audi', 'Q7', 'Электропакет, Продвинутая сигнализация', 4300000, 'ZFA18800004473122');
-        $car3->addToDealer($this->getReference('dealer 2'));
         $car4 = new Car('Audi', 'Q7', 'Электропакет, Продвинутая сигнализация', 3950000, 'JHLRE48577C415490');
-        $car4->addToDealer($this->getReference('dealer 2'));
         $car5 = new Car('Skoda', 'Octavia', 'Пакет безопасности, Электропакет', 1100000, 'KMHBT31GP3U013758');
-        $car5->addToDealer($this->getReference('dealer 3'));
         $car6 = new Car('Porsche', 'Panamera', 'Продвинутая сигнализация, Пакет безопасности', 6200000, 'KNDJC733545301768');
+        $car1->addToDealer($dealer1);
+        $car2->addToDealer($dealer1);
+        $car3->addToDealer($dealer2);
+        $car4->addToDealer($dealer2);
+        $car5->addToDealer($dealer3);
 
         $manager->persist($car1);
         $manager->persist($car2);

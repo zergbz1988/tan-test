@@ -14,8 +14,10 @@ return [
     'requestClass' => Request::class,
     'responseClass' => JsonResponse::class,
     'store' => [
-        'type' => 'sql',
+        //'type' => 'sql',
+        'type' => 'mongodb',
         'dbParams' => require_once __DIR__ . '/doctrine/db.php',
+        'mongodbParams' => 'mongodb://localhost:27017',
         'useFixtures' => true,
         'fixtures' => [
             DealerFixtureLoader::class,
@@ -24,6 +26,11 @@ return [
         'entitiesMapper' => [
             __DIR__ . '/doctrine/entities'
         ],
+        'documentsMapper' => [
+            __DIR__ . '/doctrine/documents'
+        ],
+        'proxyDir' => __DIR__ . '/../Models/Proxies',
+        'hydratorDir' => __DIR__ . '/../Models/Hydrators',
         'isDevMode' => true,
     ],
 ];

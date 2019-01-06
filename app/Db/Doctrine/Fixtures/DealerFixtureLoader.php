@@ -26,8 +26,8 @@ class DealerFixtureLoader extends AbstractFixture
         $manager->persist($dealer3);
         $manager->flush();
 
-        $this->addReference('dealer 1', $dealer1);
-        $this->addReference('dealer 2', $dealer2);
-        $this->addReference('dealer 3', $dealer3);
+        $this->addReference('dealer1', $dealer1);
+        $this->addReference('dealer2', $dealer2);
+        $this->addReference('dealer3', $dealer3);
     }
 }

@@ -10,6 +10,7 @@
     },
     "require": {
         "php": "^7.1.7",
+        "ext-mongo": "^1.6.7",
         "symfony/routing": "^4.2.1",
         "symfony/http-foundation": "^4.2.1",
         "doctrine/migrations": "^1.8",
@@ -19,7 +20,9 @@
         "symfony/http-kernel": "^4.2",
         "doctrine/orm": "^2.6",
         "doctrine/data-fixtures": "^1.3",
-        "symfony/validator": "^4.2"
+        "symfony/validator": "^4.2",
+        "alcaeus/mongo-php-adapter": "^1.1",
+        "doctrine/mongodb-odm": "^1.2"
     },
     "license": "MIT",
     "authors": [
@@ -28,5 +31,10 @@
             "email": "zergbz1988@gmail.com"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "config": {
+        "platform": {
+            "ext-mongo": "1.6.16"
+        }
+    }
 }
