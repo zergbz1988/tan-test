@@ -1,4 +1,0 @@
-name: TanTest Migrations
-migrations_namespace: App\Db\Migrations
-migrations_directory: app/db/doctrine-migrations/migrations
-table_name: migration_versions

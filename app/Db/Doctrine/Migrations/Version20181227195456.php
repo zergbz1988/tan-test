@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Db\Migrations;
+namespace App\Db\Doctrine\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Type;

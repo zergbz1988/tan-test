@@ -2,8 +2,9 @@
 
 return [
     'dbname' => 'tan-test',
+    'host' => 'localhost',
+    'port' => 3306,
     'user' => 'root',
     'password' => '',
-    'host' => 'localhost',
-    'driver' => 'pdo_mysql'
+    'driver' => 'pdo_mysql',
 ];

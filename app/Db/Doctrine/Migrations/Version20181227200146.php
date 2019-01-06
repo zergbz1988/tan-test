@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Db\Migrations;
+namespace App\Db\Doctrine\Migrations;
 
 use Doctrine\DBAL\Migrations\Version;
 use Doctrine\DBAL\Schema\Schema;
@@ -63,45 +63,23 @@ final class Version20181227200146 extends AbstractMigration
             ->setLength(17)
             ->setNotnull(true)
             ->setComment('VIN-номер');
+        $table
+            ->addColumn('dealer_id', Type::INTEGER)
+            ->setLength(11)
+            ->setUnsigned(true)
+            ->setNotnull(false)
+            ->setComment('ID дилера, у которого продаётся данный авто');
 
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['vin'], 'UIDX_cars_vin');
         $table->addIndex(['make', 'model', 'componentry'], 'IDX_cars_mmc', [], ['lengths' => [128, 128, 512]]);
 
-        $table = $schema->createTable('cars_at_dealers');
-        $table
-            ->addColumn('id', Type::INTEGER)
-            ->setLength(11)
-            ->setUnsigned(true)
-            ->setNotnull(true)
-            ->setAutoincrement(true)
-            ->setComment('ID');
-        $table
-            ->addColumn('car_id', Type::INTEGER)
-            ->setLength(11)
-            ->setUnsigned(true)
-            ->setNotnull(true)
-            ->setComment('ID автомобиля');
-        $table
-            ->addColumn('dealer_id', Type::INTEGER)
-            ->setLength(11)
-            ->setUnsigned(true)
-            ->setNotnull(true)
-            ->setComment('ID дилерского центра');
-
-        $table->setPrimaryKey(['id']);
-        $table->addIndex(['car_id'], 'IDX_c_at_d_car_id');
         $table->addIndex(['dealer_id'], 'IDX_c_at_d_dealer_id');
-        $table->addUniqueIndex(['dealer_id', 'car_id'], 'UIDX_c_at_d_cd');
 
-        $table->addForeignKeyConstraint('cars', ['car_id'], ['id'], [
-            'onUpdate' => 'cascade',
-            'onDelete' => 'cascade'
-        ], 'FK_c_at_d_car_id');
         $table->addForeignKeyConstraint('dealers', ['dealer_id'], ['id'], [
-            'onUpdate' => 'cascade',
-            'onDelete' => 'cascade'
-        ], 'FK_c_at_d_dealer_id');
+            'onUpdate' => 'SET NULL',
+            'onDelete' => 'SET NULL'
+        ], 'FK_cars_dealer_id');
     }
 
     /**

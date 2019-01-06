@@ -1,0 +1,13 @@
+App\Models\Entities\Dealer:
+ type: entity
+ table: dealers
+ id:
+  id:
+   type: integer
+   generator:
+    strategy: AUTO
+ fields:
+  name:
+   length: 128
+  address:
+   type: text

@@ -8,27 +8,38 @@
 
 namespace TanTest\Http;
 
+use Psr\Container\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver as SymfonyControllerResolver;
 
+/**
+ * Class ControllerResolver
+ * @package TanTest\Http
+ */
 class ControllerResolver extends SymfonyControllerResolver
 {
-    private $response;
+    private $app, $request, $responseClass;
 
-    public function __construct($response)
+    /**
+     * ControllerResolver constructor.
+     * @param ContainerInterface $app
+     * @param Request $request
+     * @param string $responseClass
+     */
+    public function __construct(ContainerInterface $app, Request $request, string $responseClass)
     {
-        $this->response = $response;
+        $this->app = $app;
+        $this->request = $request;
+        $this->responseClass = $responseClass;
         parent::__construct(null);
     }
 
     /**
-     * Returns an instantiated controller.
-     *
-     * @param string $class A class name
-     *
-     * @return object
+     * @param string $class
+     * @return mixed|object
      */
     protected function instantiateController($class)
     {
-        return new $class($this->response);
+        return new $class($this->app, $this->request, $this->responseClass);
     }
 }

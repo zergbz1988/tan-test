@@ -1,0 +1,26 @@
+App\Models\Entities\Car:
+ type: entity
+ table: cars
+ repositoryClass: App\Models\Repositories\CarRepository
+ id:
+  id:
+   type: integer
+   generator:
+    strategy: AUTO
+ manyToOne:
+  dealer:
+   targetEntity: App\Models\Entities\Dealer
+   joinColumn:
+    name: dealer_id
+    referencedColumnName: id
+ fields:
+  make:
+   length: 128
+  model:
+   length: 128
+  componentry:
+   type: text
+  price:
+   type: integer
+  vin:
+   length: 17

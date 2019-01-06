@@ -1,0 +1,4 @@
+name: TanTest Migrations
+migrations_namespace: App\Db\Doctrine\Migrations
+migrations_directory: app/Db/Doctrine/Migrations
+table_name: migration_versions
