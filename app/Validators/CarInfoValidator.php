@@ -20,59 +20,77 @@ class CarInfoValidator extends Validator
      */
     public function validate(): bool
     {
-        $constrains = [
+        $params = [
             'name' => [
-                new NotBlank(),
-                new Type('string'),
-                new Length([
-                    'min' => 2,
-                    'max' => 255
-                ])
+                'value' => $this->query->get('name'),
+                'constrains' => [
+                    new NotBlank(),
+                    new Type('string'),
+                    new Length([
+                        'min' => 2,
+                        'max' => 255
+                    ])
+                ]
             ],
             'address' => [
-                new NotBlank(),
-                new Type('string'),
-                new Length([
-                    'min' => 5,
-                    'max' => 255
-                ])
+                'value' => $this->query->get('address'),
+                'constrains' => [
+                    new NotBlank(),
+                    new Type('string'),
+                    new Length([
+                        'min' => 5,
+                        'max' => 255
+                    ])
+                ]
             ],
             'phone' => [
-                new NotBlank(),
-                new Type('integer'),
-                new Length([
-                    'min' => 7,
-                    'max' => 11
-                ])
+                'value' => $this->query->getInt('phone'),
+                'constrains' => [
+                    new NotBlank(),
+                    new Type('integer'),
+                    new Length([
+                        'min' => 7,
+                        'max' => 11
+                    ])
+                ]
             ],
             'make' => [
-                new NotBlank(),
-                new Type('string'),
-                new Length([
-                    'min' => 3,
-                    'max' => 128
-                ])
+                'value' => $this->query->get('make'),
+                'constrains' => [
+                    new NotBlank(),
+                    new Type('string'),
+                    new Length([
+                        'min' => 3,
+                        'max' => 128
+                    ])
+                ]
             ],
             'model' => [
-                new NotBlank(),
-                new Type('string'),
-                new Length([
-                    'min' => 1,
-                    'max' => 128
-                ])
+                'value' => $this->query->get('model'),
+                'constrains' => [
+                    new NotBlank(),
+                    new Type('string'),
+                    new Length([
+                        'min' => 1,
+                        'max' => 128
+                    ])
+                ]
             ],
             'componentry' => [
-                new NotBlank(),
-                new Type('string'),
-                new Length([
-                    'min' => 3,
-                    'max' => 1000
-                ])
+                'value' => $this->query->get('componentry'),
+                'constrains' => [
+                    new NotBlank(),
+                    new Type('string'),
+                    new Length([
+                        'min' => 3,
+                        'max' => 1000
+                    ])
+                ]
             ],
         ];
 
-        foreach ($constrains as $parameter => $constrain) {
-            $this->addErrors($parameter, $this->validator->validate($this->query->get($parameter), $constrain));
+        foreach ($params as $param => $data) {
+            $this->addErrors($param, $this->validator->validate($data['value'], $data['constrains']));
         }
 
         if (count($this->errors()) > 0) {

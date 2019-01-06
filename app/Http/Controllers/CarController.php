@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Entities\Car;
 use App\Validators\CarInfoValidator;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\HttpFoundation\Response;
 use TanTest\Foundation\App;
-use TanTest\Foundation\Request\Validator;
 use TanTest\Http\Controller;
 
 /**
