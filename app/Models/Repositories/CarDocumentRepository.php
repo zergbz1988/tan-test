@@ -2,7 +2,6 @@
 
 namespace App\Models\Repositories;
 
-use Doctrine\ODM\MongoDB\Query\Expr;
 use MongoRegex;
 use App\Models\Entities\Car;
 use Doctrine\ODM\MongoDB\DocumentRepository;

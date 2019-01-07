@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Entities\Car;
 use App\Validators\CarInfoValidator;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use TanTest\Foundation\App;
 use TanTest\Http\Controller;
+use LogicException;
 
 /**
  * Class CarController
@@ -16,14 +18,14 @@ use TanTest\Http\Controller;
  */
 class CarController extends Controller
 {
+    /**
+     * @return Response
+     */
     public function info(): Response
     {
         $validator = new CarInfoValidator($this->request()->query);
         if (!$validator->validate()) {
-            return $this->response([
-                'status' => 'wrong query',
-                'data' => $validator->errors(),
-            ], 400);
+            throw new BadRequestHttpException($validator->errorsAsString());
         }
 
         $make = $this->request()->query->get('make');
@@ -34,7 +36,7 @@ class CarController extends Controller
             $entityManager = $this->app()->getEntityManager();
             $data = $entityManager->getRepository(Car::class)
                 ->findFirstByClientAndCarParams($make . '%', $model . '%', '%' . $componentry . '%');
-        } catch (\LogicException $e) {
+        } catch (LogicException $e) {
             $documentManager = $this->app()->getDocumentManager();
             $data = $documentManager->getRepository(Car::class)
                 ->findFirstByClientAndCarParams('/' . $make . '.*/', '/' . $model . '.*/', '/.*' . $componentry . '.*/');

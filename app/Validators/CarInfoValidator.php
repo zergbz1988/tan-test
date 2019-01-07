@@ -11,7 +11,7 @@ namespace App\Validators;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
-use TanTest\Http\Request\Validator;
+use TanTest\Foundation\Validator;
 
 class CarInfoValidator extends Validator
 {

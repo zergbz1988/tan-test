@@ -1,6 +1,6 @@
 <?php
 
-namespace TanTest\Http\Request;
+namespace TanTest\Foundation;
 
 
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -38,6 +38,19 @@ abstract class Validator
     public function errors(): array
     {
         return $this->errors;
+
+    }
+
+    /**
+     * @return string
+     */
+    public function errorsAsString(): string
+    {
+        $errors = [];
+        foreach ($this->errors as $key => $value) {
+            $errors[$key] = '\'' . $key . '\': ' . implode(', ', $value);
+        }
+        return implode(' ', $errors);
     }
 
     /**

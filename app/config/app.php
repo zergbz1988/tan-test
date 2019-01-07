@@ -2,7 +2,7 @@
 
 use App\Db\Doctrine\Fixtures\{CarFixtureLoader, DealerFixtureLoader};
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpFoundation\Request;
+use TanTest\Http\Request\JsonRequest;
 use Symfony\Component\Routing\Loader\PhpFileLoader;
 use TanTest\Http\Response\JsonResponse;
 
@@ -11,7 +11,7 @@ $loader = new PhpFileLoader($fileLocator);
 
 return [
     'routes' => $loader->load('routes.php'),
-    'requestClass' => Request::class,
+    'requestClass' => \TanTest\Http\Request\SerializedObjectRequest::class,
     'responseClass' => JsonResponse::class,
     'store' => [
         //'type' => 'sql',
