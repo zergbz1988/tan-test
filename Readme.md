@@ -21,7 +21,11 @@
 
 **Пример отправляемых данных**
 
-`json`: `{"make":"Mercedes","model":"C","componentry":"Эле","name":"Василий","address":"Москва","phone":9010923345}`
+`json`: 
+```
+{"make":"Mercedes","model":"C","componentry":"Эле","name":"Василий","address":"Москва","phone":9010923345}
+```
+
 `yaml`: 
 ```
 make: Mercedes
@@ -31,7 +35,11 @@ name: Василий
 address: Москва
 phone: 9010923345
 ```         
-`serialized object`: `a:6:{s:4:"make";s:8:"Mercedes";s:5:"model";s:1:"C";s:11:"componentry";s:6:"Эле";s:4:"name";s:14:"Василий";s:7:"address";s:12:"Москва";s:5:"phone";i:9010923345;}`
+`serialized object`: 
+```
+a:6:{s:4:"make";s:8:"Mercedes";s:5:"model";s:1:"C";s:11:"componentry";s:6:"Эле";s:4:"name";s:14:"Василий";s:7:"address";s:12:"Москва";s:5:"phone";i:9010923345;}
+```
+
 `xml`: 
 ```
 <Root>
@@ -46,7 +54,11 @@ phone: 9010923345
 
 **Пример ответа**
 
-`json`: `{"status":"ok","data":{"car":{"price":2500000,"vin":"4USBT53544LT26841"},"dealer":{"name":"Дилерский центр №1","address":"ул. Академика Янгеля, 5"}}}`
+`json`: 
+```
+{"status":"ok","data":{"car":{"price":2500000,"vin":"4USBT53544LT26841"},"dealer":{"name":"Дилерский центр №1","address":"ул. Академика Янгеля, 5"}}}
+```
+
 `xml`: 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
