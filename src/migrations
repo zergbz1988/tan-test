@@ -7,4 +7,4 @@ if [ -d /proc/cygdrive ] && [[ $(which php) == $(readlink -n /proc/cygdrive)/* ]
    dir=$(cygpath -m "$dir");
 fi
 
-"${dir}/doctrine-migrations" "migrations:$@" --db-configuration app/config/packages/doctrine/db.php --configuration app/config/packages/doctrine/migrations.yml --no-interaction
+"${dir}/doctrine-migrations" "migrations:$@" --db-configuration app/config/doctrine/db.php --configuration app/config/doctrine/migrations.yml --no-interaction

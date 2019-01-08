@@ -1,3 +1,3 @@
 <?php
 
-return 'mongodb://localhost:27017';
+return 'mongodb://mongodb:27017';

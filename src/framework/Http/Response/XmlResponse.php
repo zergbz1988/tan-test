@@ -22,7 +22,7 @@ class XmlResponse extends Response
      */
     public function setContent($content)
     {
-        $xml = new \SimpleXMLElement('<Response/>');
+        $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><Response/>');
         $this->arrayToXml($content, $xml);
         return parent::setContent($xml->asXML());
     }

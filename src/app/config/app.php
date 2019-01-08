@@ -15,9 +15,9 @@ return [
 //    'requestClass' => XmlRequest::class,
 //    'requestClass' => YamlRequest::class,
 //    'requestClass' => SerializedObjectRequest::class,
-    'responseClass' => JsonResponse::class,
+//    'responseClass' => JsonResponse::class,
 //    'responseClass' => XmlResponse::class,
-//    'responseClass' => HtmlResponse::class,
+    'responseClass' => HtmlResponse::class,
     'store' => [
         //'type' => 'sql',
         'type' => 'mongodb',
